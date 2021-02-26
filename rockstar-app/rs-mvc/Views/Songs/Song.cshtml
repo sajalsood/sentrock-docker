@@ -9,8 +9,46 @@
         <img class="card-img-top card-img-pos" src="~/images/@(Model.ImageUrl)" alt="Card image"  />
     </div>
     <div class="text-center pt-5">
+        <div>  
+            <input class="btn btn-warning" name="polarityButton" id="btnPolarity" value="Polarity" type="button">  
+            <div id="polarity" class="text-danger m-3"></div>
+        </div>
+
         <h1 class="text-info text-center">@(Model.Name)</h1>
         <div class="text-success m-3">@Html.Raw(Model.Lyrics)</div>
         <h5 class="text-primary text-center">- @(Model.Artist)</h5>
+
     </div>
 </div>
+
+@section Scripts  
+{  
+    <script type="text/javascript">  
+        $(function () {  
+            $("#btnPolarity").click(function () {  
+
+                let selection = document.getSelection ? document.getSelection().toString() :  document.selection.createRange().toString() ;
+
+                if(selection != '') {
+                    $.ajax({  
+                        type: "GET",  
+                        url: '/song/polarity?lyric=' + selection,  
+                        dataType: "json",  
+                        contentType: "application/json; charset=utf-8",  
+                        success: function (resp) {  
+                            document.getElementById("polarity").innerText = resp.polarity;
+                        },  
+                        error: function () {  
+                            alert("Error");  
+                        }  
+                    });  
+                }
+            });  
+        }); 
+
+        document.addEventListener("selectionchange", event => {
+            @* let selection = document.getSelection ? document.getSelection().toString() :  document.selection.createRange().toString() ; *@
+        });
+
+    </script>  
+}  

@@ -77,8 +77,12 @@ namespace Rockstar.Controllers
         [Route("api/songs/sentiment")]
         public async Task<IActionResult> GetSentiment([FromQuery]string lyric)
         {
-            SentenceModel sent = new SentenceModel();
-            sent.sentence = lyric;
+            PolarityRequestModel sent = new PolarityRequestModel() 
+            {
+                sentence = lyric
+            };
+
+            SentenceResponseModel polarity = new SentenceResponseModel();
 
             var json = JsonConvert.SerializeObject(sent, Formatting.Indented);
             var payload = new StringContent(json, Encoding.UTF8, "application/json");
@@ -90,14 +94,16 @@ namespace Rockstar.Controllers
                     using (var response = await httpClient.PostAsync(API_URL + "sentiment", payload))
                     {
                         string apiResponse =  await response.Content.ReadAsStringAsync();
-                        return Ok(apiResponse);
+                        polarity = JsonConvert.DeserializeObject<SentenceResponseModel>(apiResponse);
                     }
                 }
             }
             catch(Exception ex) 
             {
-                return Ok(json);
+                return StatusCode(404, "Not Found");
             }
+
+            return Ok(polarity);
         }
     }
 }
