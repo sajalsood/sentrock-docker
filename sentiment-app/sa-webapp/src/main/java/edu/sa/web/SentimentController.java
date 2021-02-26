@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 import edu.sa.web.dto.SentenceDto;
 import edu.sa.web.dto.SentimentDto;
 
-
 @CrossOrigin (origins ="*")
 @RestController
 public class SentimentController {
@@ -33,7 +32,6 @@ public class SentimentController {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> result =
                 restTemplate.getForEntity(saLogicApiUrl + "/testHealth", String.class);
-//assertEquals(HttpStatus.OK, result.getStatusCode());
         return result.getBody();
     }
     @GetMapping("/testSentiment")
@@ -41,7 +39,6 @@ public class SentimentController {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> result =
                 restTemplate.getForEntity(saLogicApiUrl + "/analyse?sentence=i+am+so+happy!", String.class);
-//assertEquals(HttpStatus.OK, result.getStatusCode());
         return result.getBody();
     }
 }
