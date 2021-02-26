@@ -14,7 +14,7 @@ namespace Rockstar.Controllers
     [ApiController]
     public class SongsController : Controller
     {
-        private static readonly string BASE_URL = "https://localhost:5001/api/songs/";
+        private static readonly string BASE_URL = "http://localhost:5001/api/songs/";
 
         private readonly ILogger<SongsController> _logger;
 
