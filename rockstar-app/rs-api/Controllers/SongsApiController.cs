@@ -1,17 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Rockstar.Models;
 
 namespace Rockstar.Controllers
 {
     [ApiController]
-    
     public class SongsApiController : ControllerBase
     {
+        private static readonly string API_URL = "http://localhost:8080/";
+
         private static readonly List<SongModel> Songs = new List<SongModel>()
         {
             new SongModel()
@@ -66,6 +71,33 @@ namespace Rockstar.Controllers
             }
 
             return Ok(song);
+        }
+
+        [HttpGet]
+        [Route("api/songs/sentiment")]
+        public async Task<IActionResult> GetSentiment([FromQuery]string lyric)
+        {
+            SentenceModel sent = new SentenceModel();
+            sent.sentence = lyric;
+
+            var json = JsonConvert.SerializeObject(sent, Formatting.Indented);
+            var payload = new StringContent(json, Encoding.UTF8, "application/json");
+
+            try 
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.PostAsync(API_URL + "sentiment", payload))
+                    {
+                        string apiResponse =  await response.Content.ReadAsStringAsync();
+                        return Ok(apiResponse);
+                    }
+                }
+            }
+            catch(Exception ex) 
+            {
+                return Ok(json);
+            }
         }
     }
 }
