@@ -59,7 +59,31 @@ namespace Rockstar.Controllers
             return song;
         }
 
-        
+        [HttpGet]
+        [Route("/song/polarity")]
+        public async Task<IActionResult> Polarity([FromQuery]string lyric)
+        {
+            PolarityViewModel resp = new PolarityViewModel();
+
+            try 
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync(BASE_URL + "sentiment?lyric=" + lyric))
+                    {
+                        string apiResponse =  await response.Content.ReadAsStringAsync();
+                        resp = JsonConvert.DeserializeObject<PolarityViewModel>(apiResponse);
+                    }
+                }
+            }
+            catch(Exception ex) 
+            {
+
+            }
+           
+            return Json(resp);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         [Route("error")]
         public IActionResult Error()
