@@ -13,4 +13,5 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
 COPY --from=build-env /app/out .
+ENV SA_WEBAPP_API_URL http://localhost:8080
 ENTRYPOINT ["dotnet", "rs-api.dll"]

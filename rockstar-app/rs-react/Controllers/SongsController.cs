@@ -14,7 +14,7 @@ namespace Rockstar.Controllers
     [ApiController]
     public class SongsController : Controller
     {
-        private static readonly string BASE_URL = "http://localhost:5001/api/songs/";
+        private static readonly string RS_API_URL = Environment.GetEnvironmentVariable("RS_API_URL");
 
         private readonly ILogger<SongsController> _logger;
 
@@ -31,7 +31,7 @@ namespace Rockstar.Controllers
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync(BASE_URL))
+                using (var response = await httpClient.GetAsync(RS_API_URL + "/api/songs"))
                 {
                     string apiResponse =  await response.Content.ReadAsStringAsync();
                     songs = JsonConvert.DeserializeObject<List<SongViewModel>>(apiResponse);
@@ -49,7 +49,7 @@ namespace Rockstar.Controllers
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync(BASE_URL + id))
+                using (var response = await httpClient.GetAsync(RS_API_URL + "/api/songs/" + id))
                 {
                     string apiResponse =  await response.Content.ReadAsStringAsync();
                     song = JsonConvert.DeserializeObject<SongViewModel>(apiResponse);
@@ -69,7 +69,7 @@ namespace Rockstar.Controllers
             {
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.GetAsync(BASE_URL + "sentiment?lyric=" + lyric))
+                    using (var response = await httpClient.GetAsync(RS_API_URL + "/api/songs/sentiment?lyric=" + lyric))
                     {
                         string apiResponse =  await response.Content.ReadAsStringAsync();
                         resp = JsonConvert.DeserializeObject<PolarityViewModel>(apiResponse);

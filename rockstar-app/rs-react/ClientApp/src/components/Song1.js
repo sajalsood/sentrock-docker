@@ -40,7 +40,6 @@ export default function Song1() {
   }
 
   function getPolarity() {
-    console.log("here");
     let selection = document.getSelection ? document.getSelection().toString() :  document.selection.createRange().toString() ;
 
     const polarity = async () => {

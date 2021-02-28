@@ -15,7 +15,7 @@ namespace Rockstar.Controllers
     [ApiController]
     public class SongsApiController : ControllerBase
     {
-        private static readonly string API_URL = "http://localhost:8080/";
+        private static readonly string SA_WEBAPP_API_URL = Environment.GetEnvironmentVariable("SA_WEBAPP_API_URL");
 
         private static readonly List<SongModel> Songs = new List<SongModel>()
         {
@@ -77,6 +77,8 @@ namespace Rockstar.Controllers
         [Route("api/songs/sentiment")]
         public async Task<IActionResult> GetSentiment([FromQuery]string lyric)
         {
+            string SA_WEBAPP_API_URL = Environment.GetEnvironmentVariable("SA_WEBAPP_API_URL");
+
             PolarityRequestModel sent = new PolarityRequestModel() 
             {
                 sentence = lyric
@@ -91,7 +93,7 @@ namespace Rockstar.Controllers
             {
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.PostAsync(API_URL + "sentiment", payload))
+                    using (var response = await httpClient.PostAsync(SA_WEBAPP_API_URL + "/sentiment", payload))
                     {
                         string apiResponse =  await response.Content.ReadAsStringAsync();
                         polarity = JsonConvert.DeserializeObject<SentenceResponseModel>(apiResponse);
