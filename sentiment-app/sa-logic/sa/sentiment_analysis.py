@@ -2,6 +2,7 @@ from textblob import TextBlob
 from flask import Flask, request, jsonify 
 from flask_cors import CORS
 import requests
+import os
 
 app = Flask(__name__) 
 CORS(app)
@@ -12,7 +13,8 @@ def hello():
 
 @app.route("/testComms", methods=['GET']) 
 def verify_comms_local():
-    response = requests.get("http://localhost:8080/testHealth") 
+    api_url = os.environ['SA_WEBAPP_API_URL']
+    response = requests.get(api_url + "/testHealth") 
     return response.text
 
 @app.route("/analyse/sentiment", methods=['POST']) 
