@@ -23,11 +23,12 @@ public class SentimentController {
                 sentenceDto, SentimentDto.class)
                 .getBody();
     }
+
     @GetMapping("/testHealth")
     public String testHealth() {
         return "hello from springboot webapp!";
     }
-    @GetMapping("/testComms")
+    @GetMapping("/testLogicApp")
     public String testComms() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> result =

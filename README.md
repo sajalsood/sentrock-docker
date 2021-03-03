@@ -13,7 +13,7 @@ docker build -t sa-frontend .
 - Docker run
 
 ```sh
-docker run --rm -it --name sa-frontend-cont -p 3000:80 --add-host localhost:192.168.4.136 sa-frontend
+docker run --rm -it --name sa-frontend-cont -p 3000:80 --add-host localhost:192.168.4.136 sajalsood/sa-frontend
 ```
 
 ### sa-webapp
@@ -27,7 +27,7 @@ docker build -t sa-webapp .
 - Docker run
 
 ```sh
-docker run --rm -it --name sa-webapp-cont -p 8080:8080 --add-host localhost:192.168.4.136 sa-webapp
+docker run --rm -it --name sa-webapp-cont -p 8080:8080 --add-host localhost:192.168.4.136 sajalsood/sa-webapp
 ```
 
 ### sa-logic
@@ -41,7 +41,7 @@ docker build -t sa-logic .
 - Docker run
 
 ```sh
-docker run --rm -it --name sa-logic-cont -p 5000:5000 --add-host localhost:192.168.4.136 sa-logic
+docker run --rm -it --name sa-logic-cont -p 5000:5000 --add-host localhost:192.168.4.136 sajalsood/sa-logic
 ```
 
 ## Rockstar Library Docker
@@ -57,7 +57,7 @@ docker build -t rs-react .
 - Docker run
 
 ```sh
-docker run --rm -it --name rs-react-cont -p 5003:80 --add-host localhost:192.168.4.136 rs-react
+docker run --rm -it --name rs-react-cont -p 5003:80 --add-host localhost:192.168.4.136 sajalsood/rs-react
 ```
 
 ### rs-api
@@ -71,7 +71,7 @@ docker build -t rs-api .
 - Docker run
 
 ```sh
-docker run --rm -it --name rs-api-cont -p 5001:80 --add-host localhost:192.168.4.136 rs-api
+docker run --rm -it --name rs-api-cont -p 5001:80 --add-host localhost:192.168.4.136 sajalsood/rs-api
 ```
 
 ### rs-mvc
@@ -84,6 +84,6 @@ docker build -t rs-mvc .
 
 - Docker run
 
-```sh
-docker run --rm -it --name rs-mvc-cont -p 5002:80 --add-host localhost:192.168.4.136 rs-mvc
+```sh 
+docker run --rm -it --name rs-mvc-cont -p 5002:80 --add-host localhost:192.168.4.136 sajalsood/rs-mvc
 ```

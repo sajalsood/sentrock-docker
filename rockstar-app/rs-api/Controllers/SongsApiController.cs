@@ -53,6 +53,13 @@ namespace Rockstar.Controllers
         }
 
         [HttpGet]
+        [Route("testHealth")]
+        public IActionResult GetHealth() 
+        {
+            return Ok("Hello from Dotnet API app!");
+        }
+
+        [HttpGet]
         [Route("api/songs")]
         public IActionResult Get() 
         {
@@ -77,8 +84,6 @@ namespace Rockstar.Controllers
         [Route("api/songs/sentiment")]
         public async Task<IActionResult> GetSentiment([FromQuery]string lyric)
         {
-            string SA_WEBAPP_API_URL = Environment.GetEnvironmentVariable("SA_WEBAPP_API_URL");
-
             PolarityRequestModel sent = new PolarityRequestModel() 
             {
                 sentence = lyric

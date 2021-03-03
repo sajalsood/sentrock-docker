@@ -13,4 +13,6 @@ WORKDIR /src
 EXPOSE 80
 COPY --from=build /app/publish .
 ENV RS_API_URL http://localhost:5001
+ENV SA_LOGIC_URL http://192.168.4.136:5000
+ENV SA_WEB_APP_URL http://localhost:8080
 ENTRYPOINT ["dotnet", "rs-react.dll"]

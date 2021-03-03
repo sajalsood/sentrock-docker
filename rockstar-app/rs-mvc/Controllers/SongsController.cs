@@ -16,12 +16,96 @@ namespace Rockstar.Controllers
     {
         private static readonly string RS_API_URL = Environment.GetEnvironmentVariable("RS_API_URL");
 
+        private static readonly string SA_LOGIC_URL = Environment.GetEnvironmentVariable("SA_LOGIC_URL");
+
+        private static readonly string SA_WEB_APP_URL = Environment.GetEnvironmentVariable("SA_WEB_APP_URL");
+
         private readonly ILogger<SongsController> _logger;
 
         public SongsController(ILogger<SongsController> logger)
         {
             _logger = logger;
         }
+
+        [HttpGet]
+        [Route("testHealth")]
+        public IActionResult GetHealth() 
+        {
+            return Ok("Hello from Dotnet MVC app!");
+        }
+
+        [HttpGet]
+        [Route("testlogicapp")]
+        public async Task<IActionResult> GetLogicAppHealth() 
+        {
+            string apiResponse = String.Empty;
+
+            try 
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync(SA_LOGIC_URL + "/testHealth"))
+                    {
+                        apiResponse =  await response.Content.ReadAsStringAsync();
+                    }
+                }
+            }
+            catch(Exception ex) 
+            {
+
+            }
+           
+            return Json(apiResponse);
+        }
+
+        [HttpGet]
+        [Route("testwebapp")]
+        public async Task<IActionResult> GetWebAppHealth() 
+        {
+            string apiResponse = String.Empty;
+
+            try 
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync(SA_WEB_APP_URL + "/testHealth"))
+                    {
+                        apiResponse =  await response.Content.ReadAsStringAsync();
+                    }
+                }
+            }
+            catch(Exception ex) 
+            {
+
+            }
+           
+            return Json(apiResponse);
+        }
+
+        [HttpGet]
+        [Route("testwebapi")]
+        public async Task<IActionResult> GetWebApiHealth() 
+        {
+            string apiResponse = String.Empty;
+
+            try 
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync(RS_API_URL + "/testHealth"))
+                    {
+                        apiResponse =  await response.Content.ReadAsStringAsync();
+                    }
+                }
+            }
+            catch(Exception ex) 
+            {
+
+            }
+           
+            return Json(apiResponse);
+        }
+       
 
         [HttpGet]
         [Route("")]
